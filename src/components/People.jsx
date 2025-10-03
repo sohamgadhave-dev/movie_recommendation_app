@@ -3,7 +3,7 @@ import Topnav from "./templates/Topnav";
 import Dropdown from "./templates/Dropdown";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Cards from "./templates/Cards";
-import Loader from "./templates/loader";
+import Loader from "./templates/Loader";
 import { useNavigate } from "react-router-dom";
 import axios from "../../utils/axios";
 

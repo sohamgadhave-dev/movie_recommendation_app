@@ -5,7 +5,7 @@ import axios from "../../../utils/axios";
 import Topnav from "./Topnav";
 import Dropdown from "./Dropdown";
 import Cards from "./Cards";
-import Loader from "./loader";
+import Loader from "./Loader";
 
 const Movie = () => {
   const [category, setcategory] = useState("now_playing");

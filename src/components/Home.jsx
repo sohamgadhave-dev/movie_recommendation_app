@@ -5,7 +5,7 @@ import axios from "../../utils/axios";
 import Header from "./templates/Header";
 import HorizontalCards from "./templates/HorizontalCards";
 import Dropdown from "./templates/Dropdown";
-import Loader from "./templates/loader";
+import Loader from "./templates/Loader";
 
 const Home = () => {
   document.title = "MOVIE-HOMEPAGE";

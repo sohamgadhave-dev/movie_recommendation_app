@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncloadmovie, removemovie } from "./store/actions/movieActions";
 import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import Loader from "./templates/loader";
+import Loader from "./templates/Loader";
 import HorizontalCards from "./templates/HorizontalCards";
 import noImage from "/noImage.jpg";
 

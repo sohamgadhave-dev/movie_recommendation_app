@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncloadperson, removeperson } from "./store/actions/personActions";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import Loader from "./templates/loader";
+import Loader from "./templates/Loader";
 import HorizontalCards from "./templates/HorizontalCards";
 
 const Persondetails = () => {
