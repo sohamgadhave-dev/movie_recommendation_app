@@ -1,30 +1,55 @@
-import React from 'react'
-import ReactPlayer from "react-player"
-import { useSelector } from 'react-redux'
-import { Link,  useLocation, useNavigate } from 'react-router-dom'
-
+import React from "react";
+import { useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Trailer = () => {
-    const {pathname} = useLocation()
-    const category = pathname.includes("movie") ? "movie" : "tv";
-    const ytvideo = useSelector((state) => state[category].info.videos)
-    console.log(ytvideo);
-    const navigate = useNavigate();
-    
-   
-    
-  return (
-    <div className='z-[100] absolute w-screen h-screen flex items-center justify-center top-0 left-0
-    bg-[rgba(0,0,0,.9)]'>
-        <Link
+  const { pathname } = useLocation();
+  const category = pathname.includes("movie") ? "movie" : "tv";
+  const ytVideos = useSelector((state) => state[category].info.videos);
+  const navigate = useNavigate();
+
+  // pick first trailer video
+  const trailer = ytVideos?.results?.find((v) => v.type === "Trailer") || ytVideos?.results?.[0];
+
+  if (!trailer) {
+    return (
+      <div className="z-[100] absolute inset-0 flex items-center justify-center bg-[rgba(0,0,0,.9)] text-white">
+        <button
           onClick={() => navigate(-1)}
-          className="hover:text-[#6556CD] ri-close-fill absolute text-3xl text-white right-[5%] top-[5%]" // ✅ fixed
-        ></Link>
+          className="absolute right-6 top-6 text-3xl hover:text-[#6556CD]"
+        >
+          <i className="ri-close-fill"></i>
+        </button>
+        <p className="text-xl">❌ No Trailer Available</p>
+      </div>
+    );
+  }
 
-       <iframe width="1920" height="700" src={`https://www.youtube.com/embed/${ytvideo.key}?si=q9zEPuB1TrmBaur9`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-  )
-}
+  return (
+    <div className="z-[100] fixed inset-0 flex items-center justify-center bg-[rgba(0,0,0,.9)]">
+      {/* Close Button */}
+      <button
+        onClick={() => navigate(-1)}
+        className="absolute right-6 top-6 text-3xl text-white hover:text-[#6556CD]"
+      >
+        <i className="ri-close-fill"></i>
+      </button>
 
-export default Trailer
+      {/* Responsive Trailer */}
+      <div className="w-[90%] md:w-[70%] aspect-video rounded-lg overflow-hidden shadow-lg">
+        <iframe
+          width="100%"
+          height="100%"
+          src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1`}
+          title="YouTube Trailer"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        ></iframe>
+      </div>
+    </div>
+  );
+};
 
+export default Trailer;

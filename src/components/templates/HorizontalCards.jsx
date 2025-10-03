@@ -7,7 +7,7 @@ const HorizontalCards = ({ data }) => {
 
   return (
     <div className="w-full h-[40vh] p-5">
-      <div className="w-[100%] h-[40vh] flex overflow-y-hidden ">
+      <div className="w-[200vh] md:w-[100%] h-[40vh] flex overflow-y-hidden ">
         {data.map((d, i) => (
           <Link to={`/${d.media_type}/details/${d.id}`} key={i} className="min-w-[15%] mr-5 mb-5 bg-zinc-900 ">
             <img

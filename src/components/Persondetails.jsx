@@ -22,9 +22,17 @@ const Persondetails = () => {
   if (!info) return <Loader />;
 
   return (
-    <div className="px-[15%] w-screen">
+    <div
+      style={{
+        background: `linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.95)), url(https://image.tmdb.org/t/p/original/${info.detail.profile_path})`,
+        backgroundPosition: "top",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+      className="w-screen min-h-screen px-4 md:px-[10%] py-5 overflow-y-auto"
+    >
       {/* Top Nav */}
-      <nav className="h-[10vh] w-full text-zinc-100 flex items-center gap-10 text-xl">
+      <nav className="h-[10vh] w-full text-zinc-100 flex items-center gap-5 text-xl">
         <Link
           onClick={() => navigate(-1)}
           className="hover:text-[#6556CD] ri-arrow-left-line"
@@ -32,61 +40,86 @@ const Persondetails = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="w-full flex flex-row gap-10">
+      <div className="w-full flex flex-col md:flex-row gap-10">
         {/* LEFT SIDE */}
-        <div className="w-[20%]">
+        <div className="md:w-[25%] w-full flex flex-col items-center md:items-start">
           <img
-            className="h-[40vh] object-cover shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)]"
+            className="h-[40vh] w-[30vh] object-cover rounded-lg shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)]"
             src={`https://image.tmdb.org/t/p/original/${info.detail.profile_path}`}
-            alt=""
+            alt={info.detail.name}
           />
-          <hr className="text-zinc-100 mt-3" />
-          <div className="text-2xl text-white flex gap-x-5">
-            <a
-              target="_blank"
-              href={`https://www.wikidata.org/wiki/${info.externalid.wikidata_id}`}
-            >
-              <i className="ri-global-line"></i>
-            </a>
-            <a
-              target="_blank"
-              href={`https://www.facebook.com/${info.externalid.facebook_id}`}
-            >
-              <i className="ri-facebook-box-fill"></i>
-            </a>
-            <a
-              target="_blank"
-              href={`https://www.instagram.com/${info.externalid.instagram_id}`}
-            >
-              <i className="ri-instagram-line"></i>
-            </a>
+
+          {/* Social Links */}
+          <div className="flex gap-x-5 text-2xl text-white mt-3">
+            {info.externalid.wikidata_id && (
+              <a
+                target="_blank"
+                href={`https://www.wikidata.org/wiki/${info.externalid.wikidata_id}`}
+                rel="noreferrer"
+              >
+                <i className="ri-global-line"></i>
+              </a>
+            )}
+            {info.externalid.facebook_id && (
+              <a
+                target="_blank"
+                href={`https://www.facebook.com/${info.externalid.facebook_id}`}
+                rel="noreferrer"
+              >
+                <i className="ri-facebook-box-fill"></i>
+              </a>
+            )}
+            {info.externalid.instagram_id && (
+              <a
+                target="_blank"
+                href={`https://www.instagram.com/${info.externalid.instagram_id}`}
+                rel="noreferrer"
+              >
+                <i className="ri-instagram-line"></i>
+              </a>
+            )}
           </div>
 
-          <h1 className="text-2xl text-zinc-400 font-semibold my-5">
-            Personal Info
-          </h1>
-          <h1 className="text-lg text-zinc-400 font-semibold">Known For</h1>
-          <h1 className="text-zinc-400">{info.detail.known_for_department}</h1>
+          {/* Personal Info */}
+          <div className="mt-5 w-full text-white">
+            <h1 className="text-2xl font-semibold mb-2">Personal Info</h1>
 
-          <h1 className="text-lg text-zinc-400 font-semibold">Gender</h1>
-          <h1 className="text-zinc-400">
-            {info.detail.gender === 2 ? "Male" : "Female"}
-          </h1>
-
-          <h1 className="text-lg text-zinc-400 font-semibold">Birthday</h1>
-          <h1 className="text-zinc-400">{info.detail.birthday}</h1>
-
-          <h1 className="text-lg text-zinc-400 font-semibold">Place of Birth</h1>
-          <h1 className="text-zinc-400">{info.detail.place_of_birth}</h1>
+            <div className="space-y-2 text-zinc-300">
+              <p>
+                <span className="font-semibold">Known For: </span>
+                {info.detail.known_for_department}
+              </p>
+              <p>
+                <span className="font-semibold">Gender: </span>
+                {info.detail.gender === 2 ? "Male" : "Female"}
+              </p>
+              <p>
+                <span className="font-semibold">Birthday: </span>
+                {info.detail.birthday}
+              </p>
+              <p>
+                <span className="font-semibold">Place of Birth: </span>
+                {info.detail.place_of_birth}
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="w-[80%] text-white">
-          <h1 className="text-6xl font-black my-5 text-zinc-400">{info.detail.name}</h1>
-          <h1 className="text-xl text-zinc-400 font-semibold">Biography</h1>
-          <p className="text-zinc-400 mt-3">{info.detail.biography}</p>
-          <h1 className="text-lg text-zinc-400 font-semibold mt-5">Works In</h1>
-          <HorizontalCards data={info.combinedCredits.cast}/>
+        <div className="md:w-[75%] w-full text-white">
+          <h1 className="text-4xl md:text-6xl font-black my-5">
+            {info.detail.name}
+          </h1>
+
+          {/* Biography */}
+          <h2 className="text-xl text-zinc-300 font-semibold">Biography</h2>
+          <p className="text-zinc-300 mt-3 leading-relaxed">
+            {info.detail.biography || "No biography available."}
+          </p>
+
+          {/* Works In */}
+          <h2 className="text-lg text-zinc-300 font-semibold mt-8">Known For</h2>
+          <HorizontalCards data={info.combinedCredits.cast} />
         </div>
       </div>
     </div>
